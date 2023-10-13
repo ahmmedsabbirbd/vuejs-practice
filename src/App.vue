@@ -1,19 +1,28 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { authStore } from './store/store';
+const auth = authStore
 </script>
 
 <template>
-  <section class="flex h-screen w-full">
-    <div
-      class="w-1/2"
-      style="
-        background-image: url(https://images.unsplash.com/photo-1529539795054-3c162aab037a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
-        background-repeat: no-repeat;
-        background-size: cover;
-      "
-    >
-    </div>
-    <RouterView />
+  <header class="bg-black border-b-light-100 border-b h-20 text-white items-center flex p-5 text-2xl">
+    <section class="flex justify-between w-full">
+      <h1>Stroefront Ecommerce (<span>{{ auth.user?.name }}</span>)</h1>
+      <p>
+        <button v-if="auth.isAuthenticated" @click="auth.logout()" class="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded">
+          <span>Logout</span>
+        </button>
+      </p>
+    </section>
+  </header>
+  <section class="flex">
+    <aside class="w-[450px] bg-black ">
+      <router-view name="LeftSideBar"></router-view>
+    </aside>
+    <main class="w-full min-h-screen p-5">
+      <router-view></router-view>
+    </main>
   </section>
+  <footer></footer>
 </template>
+
 <style scoped></style>
